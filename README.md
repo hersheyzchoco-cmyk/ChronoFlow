@@ -1,4 +1,4 @@
-# FlowUI
+# ChronoFlow
 
 A UI library for Roblox: one window with a sidebar of tabs, an automatic
 Home tab, sub tabs and two-column groupboxes, and a full set of controls —
@@ -12,25 +12,10 @@ This document is the full reference. `Example.luau` in this repository is
 the companion reference build: every section of it is self-contained, so
 you can copy the parts you need.
 
-## Provenance
-
-This repository is a restored copy of the **OuroFlow** UI library,
-originally published as `joustingmatch/-3` and later deleted by its author.
-The restoration was possible because the author's own `Example.luau` —
-downloaded before the deletion — embeds the complete library (lines
-3–19583 of the example); `Source.luau` here is that library extracted into
-standalone form. It is now self-hosted at `deathstrat/FlowUI` so it cannot
-disappear again.
-
-Two parts of the original repository could **not** be recovered, because
-they were not part of the downloaded example: the original `README.md` and
-`llms.txt`. This README is a new document written against the recovered
-code and example, and replaces them.
-
 ## Load it
 
 ```lua
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/deathstrat/FlowUI/refs/heads/main/Source.luau"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/hersheyzchoco-cmyk/ChronoFlow/Source.luau"))()
 ```
 
 The returned table is referred to as `Library` throughout this document.
@@ -38,7 +23,7 @@ The returned table is referred to as `Library` throughout this document.
 ## Quick start
 
 ```lua
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/deathstrat/FlowUI/refs/heads/main/Source.luau"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/hersheyzchoco-cmyk/ChronoFlow/Source.luau"))()
 
 local Window = Library:CreateWindow({
     Name = "Example",
