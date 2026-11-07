@@ -16407,8 +16407,6 @@ function Window:_buildHome(opts)
     split:GetPropertyChangedSignal("AbsoluteSize"):Connect(fitSplit)
     task.defer(fitSplit)
 
-    self:_homeExecutor(list, opts, 4)
-
     if type(pages) == "table" then
         for _, page in ipairs(pages) do
             homePage(tab:SubTab({ Name = page.Name or page.Title or "Page", Icon = page.Icon }), page)
