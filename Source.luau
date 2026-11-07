@@ -4332,6 +4332,37 @@ local function detectExecutor()
     return RunService:IsStudio() and "Studio" or "Unknown"
 end
 
+local function executorReport(opts)
+    local executor = detectExecutor()
+    local supported = opts.SupportedExecutors
+    if type(supported) == "table" then
+        local lowered = string.lower(executor)
+        for _, name in ipairs(supported) do
+            if string.find(lowered, string.lower(tostring(name)), 1, true) then
+                return executor, true, "Your executor is supported and fully compatible."
+            end
+        end
+        return executor, false, "Not on the supported list. Some features may not work."
+    end
+    local capabilities = {
+        { "writefile", writefile },
+        { "readfile", readfile },
+        { "getcustomasset", getcustomasset },
+        { "setclipboard", setclipboard or toclipboard },
+        { "request", request or http_request or (syn and syn.request) },
+    }
+    local missing = {}
+    for _, entry in ipairs(capabilities) do
+        if type(entry[2]) ~= "function" then
+            table.insert(missing, entry[1])
+        end
+    end
+    if #missing == 0 then
+        return executor, true, "Your executor is supported and fully compatible."
+    end
+    return executor, false, "Missing " .. table.concat(missing, ", ") .. ". Some features may not work."
+end
+
 -- "Don't ask again" on the unsupported executor warning: the executor's
 -- name goes in a file in the script folder, and the warning is skipped while
 -- the same executor is in use. Resetting the folder brings it back.
@@ -16406,6 +16437,8 @@ function Window:_buildHome(opts)
     end
     split:GetPropertyChangedSignal("AbsoluteSize"):Connect(fitSplit)
     task.defer(fitSplit)
+
+    -- self:_homeExecutor(list, opts, 4)
 
     if type(pages) == "table" then
         for _, page in ipairs(pages) do
