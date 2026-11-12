@@ -4960,8 +4960,10 @@ function Library.Window(_, opts)
                 if not consumed and not self._destroyed then
                     if self.Minimized then
                         self:Restore()
+                    elseif self.Open then
+                        self:Minimize()
                     else
-                        self:Toggle(not self.Open)
+                        self:Toggle(true)
                     end
                 end
             end)
