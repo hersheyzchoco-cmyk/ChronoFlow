@@ -2041,6 +2041,7 @@ function Tab:Dropdown(opts)
         Size = UDim2.fromOffset(0, chipHeight),
         AutomaticSize = Enum.AutomaticSize.X,
         TextSize = 13,
+        TextTruncate = Enum.TextTruncate.None,
         Visible = false,
         Parent = chip,
     })
