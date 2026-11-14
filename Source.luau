@@ -2052,15 +2052,17 @@ function Tab:Dropdown(opts)
         if measure.TextBounds.X <= maxText then
             return fullText
         end
-        local text = fullText
-        while #text > 1 do
-            text = text:sub(1, -2)
-            measure.Text = text .. ".."
+        local low, high = 0, #fullText - 1
+        while low < high do
+            local mid = math.ceil((low + high) / 2)
+            measure.Text = fullText:sub(1, mid) .. ".."
             if measure.TextBounds.X <= maxText then
-                return text .. ".."
+                low = mid
+            else
+                high = mid - 1
             end
         end
-        return ".."
+        return fullText:sub(1, low) .. ".."
     end
     -- Multi picks that overflow the chip scroll sideways in a loop instead
     -- of truncating, so every selected value comes past.
@@ -2092,6 +2094,7 @@ function Tab:Dropdown(opts)
         valueLabel.TextTransparency = 1
         if not marqueeStep then
             marqueeOffset = 0
+            marqueeText.Position = UDim2.fromOffset(0, 0)
             marqueeStep = RunService.Heartbeat:Connect(function(deltaTime)
                 if not marqueeText.Parent then
                     marqueeStep:Disconnect()
