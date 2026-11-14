@@ -2046,7 +2046,7 @@ function Tab:Dropdown(opts)
     })
     local fullText = ""
     local function trimmed()
-        local maxText = (stacked and frame.AbsoluteSize.X / window.Scale.Scale - 28 or compact and rowControlWidth(frame, window) or 190) - 10 - 34
+        local maxText = valueLabel.AbsoluteSize.X
         measure.Text = fullText
         if measure.TextBounds.X <= maxText then
             return fullText
@@ -2073,7 +2073,8 @@ function Tab:Dropdown(opts)
     })
     local marqueeStep, marqueeOffset, marqueeWanted = nil, 0, false
     local function updateMarquee(scroll)
-        local overflowing = scroll and valueLabel.Text ~= fullText
+        measure.Text = fullText         
+        local overflowing = scroll and measure.TextBounds.X > valueLabel.AbsoluteSize.X
         if not overflowing then
             if marqueeStep then
                 marqueeStep:Disconnect()
