@@ -5742,6 +5742,16 @@ function Window:SetTransparent(enabled)
     -- tabs keep their contrast; over a background image it lets more through.
     local railAlpha = on and 0.5 or (self.Background and 0.45 or 0)
     tween(self.SidebarFill, { BackgroundTransparency = railAlpha }, 0.25)
+    -- The dynamic island hangs off the Gui, not Body, so mirror the alpha.
+    local orb = self._miniOrb
+    if orb and orb.Parent then
+        local islandAlpha = on and 0.35 or 0
+        tween(orb, { BackgroundTransparency = islandAlpha }, 0.25)
+        local compactLayer = orb:FindFirstChild("Compact")
+        if compactLayer then
+            tween(compactLayer, { BackgroundTransparency = islandAlpha }, 0.25)
+        end
+    end
     if self.Open and not self.Minimized and self.Root.Visible then
         tween(self.Shadow, { ImageTransparency = self._shadowRest }, 0.25)
     end
@@ -18372,6 +18382,12 @@ function Window:_buildMiniBar()
     -- Morphing between shapes: the island springs to its new size while the
     -- old layer fades out and the new one fades in just behind it.
     local layers = { Compact = compact, Expanded = expanded, Activity = activity }
+    -- Born at the window's current alpha, so a transparent profile doesn't
+    -- flash an opaque island on the first minimize.
+    if self.Transparent then
+        island.BackgroundTransparency = 0.35
+        compact.BackgroundTransparency = 0.35
+    end
     local mode = "Compact"
     local modeToken = 0
     local sizeTween, cornerTween
