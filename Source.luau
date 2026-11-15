@@ -4717,9 +4717,9 @@ function Library.Window(_, opts)
     self.SidebarFill = sidebarFill
     create("Frame", {
         Name = "Divider",
-        AnchorPoint = Vector2.new(1, 0),
-        Position = UDim2.fromScale(1, 0),
-        Size = UDim2.new(0, 1, 1, 0),
+        AnchorPoint = Vector2.new(1, 0.5),
+        Position = UDim2.fromScale(1, 0.5),
+        Size = UDim2.new(0, 1, 0.6, 0),
         BackgroundColor3 = Theme.Stroke,
         BorderSizePixel = 0,
         ZIndex = 2,
