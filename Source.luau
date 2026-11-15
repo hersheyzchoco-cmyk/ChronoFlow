@@ -18175,6 +18175,7 @@ function Window:_buildMiniBar()
     -- Chips: a muted name and a bold value, the running count in accent.
     local chips = create("Frame", {
         Size = UDim2.new(1, 0, 0, 30),
+        Visible = false,
         BackgroundTransparency = 1,
         LayoutOrder = 3,
         Parent = expandedList,
@@ -18259,6 +18260,7 @@ function Window:_buildMiniBar()
     })
     local hint = label({
         Size = UDim2.new(1, 0, 0, 14),
+        Visible = false,
         TextSize = 12,
         FontFace = Fonts.Regular,
         TextColor3 = Theme.Muted,
@@ -18828,7 +18830,7 @@ function Window:_buildMiniBar()
         local stretch = math.sin(math.clamp(t, 0, 1) * math.pi)
         bubble.Position = UDim2.fromOffset(x, pos.Y + d / 2)
         bubble.Size = UDim2.fromOffset(d * scale * (1 + 0.4 * stretch), d * scale * (1 - 0.18 * stretch))
-        bubble.BackgroundTransparency = island.GroupTransparency
+        bubble.BackgroundTransparency = math.max(island.GroupTransparency, self.Transparent and 0.35 or 0)
     end)
     bubble.MouseButton1Click:Connect(function()
         if self.Minimized then
@@ -18875,7 +18877,7 @@ function Window:_buildMiniBar()
         local extra = #names - #shownNames
         runningNames.Text = '<font color="#8A8A93">Running </font>' .. table.concat(shownNames, '<font color="#8A8A93"> · </font>')
             .. (extra > 0 and string.format('<font color="#8A8A93">  +%d</font>', extra) or "")
-        runningNames.Visible = #names > 0
+        runningNames.Visible = false
         pinnedLead = nil
         for _, handle in ipairs(self._pinned) do
             if not handle._isShown or handle:_isShown() then
