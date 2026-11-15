@@ -9710,14 +9710,20 @@ function Tab:Tabbox(opts)
         BorderSizePixel = 0,
         Parent = header,
     })
-    local strip = create("Frame", {
-        Size = UDim2.fromScale(1, 1),
+    header.ClipsDescendants = true
+    -- A canvas clips the selected tab to the header's rounded corners. It
+    -- hangs 20 px past the header on purpose: the header's rectangular clip
+    -- cuts that off, so only the top corners round and the bottom stays flat.
+    local strip = create("CanvasGroup", {
+        Size = UDim2.new(1, 0, 1, 20),
         BackgroundTransparency = 1,
         ZIndex = 2,
         Parent = header,
     })
+    corner(strip, UDim.new(0, 10))
     create("UIListLayout", {
         FillDirection = Enum.FillDirection.Horizontal,
+        VerticalAlignment = Enum.VerticalAlignment.Top,
         SortOrder = Enum.SortOrder.LayoutOrder,
         Parent = strip,
     })
@@ -9763,7 +9769,7 @@ function Tab:Tabbox(opts)
     local function relayoutButtons()
         local count = math.max(#tabbox.Tabs, 1)
         for _, page in ipairs(tabbox.Tabs) do
-            page._button.Size = UDim2.new(1 / count, 0, 1, 0)
+            page._button.Size = UDim2.new(1 / count, 0, 0, 40)
         end
     end
     local function paint(page, instant)
