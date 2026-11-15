@@ -5749,7 +5749,7 @@ function Window:SetTransparent(enabled)
         tween(orb, { BackgroundTransparency = islandAlpha }, 0.25)
         local compactLayer = orb:FindFirstChild("Compact")
         if compactLayer then
-            tween(compactLayer, { BackgroundTransparency = islandAlpha }, 0.25)
+            tween(compactLayer, { BackgroundTransparency = on and 1 or 0 }, 0.25)
         end
     end
     if self.Open and not self.Minimized and self.Root.Visible then
