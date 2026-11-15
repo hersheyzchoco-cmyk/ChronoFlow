@@ -1,4 +1,4 @@
--- OuroFlow UI library (the fork by joustingmatch that AZOTH v1-v3.4 was built on).
+-- ChronoFlow UI library (the fork by joustingmatch that AZOTH v1-v3.4 was built on).
 -- Recovered 2026-10-27 from the author's own Example.luau, which embeds the full
 -- library (lines 3-19583 of the example). The upstream repo was deleted by its
 -- author; this copy was downloaded by the user before the deletion.
@@ -278,7 +278,7 @@ local function loadLucide()
         lucideSet = result
     else
         lucideSet = false
-        warn("[OuroFlow] lucide icons unavailable: " .. tostring(result))
+        warn("[ChronoFlow] lucide icons unavailable: " .. tostring(result))
     end
     return lucideSet
 end
@@ -301,16 +301,16 @@ local FONT_WEIGHTS = {
 function Library:LoadFont(opts)
     opts = normalize(opts, {})
     if type(writefile) ~= "function" or type(isfile) ~= "function" or typeof(getcustomasset) ~= "function" then
-        warn("[OuroFlow] custom fonts need writefile, isfile and getcustomasset")
+        warn("[ChronoFlow] custom fonts need writefile, isfile and getcustomasset")
         return false
     end
     local name = opts.Name or "CustomFont"
     local weights = opts.Weights or FONT_PRESETS[name]
     if type(weights) ~= "table" then
-        warn("[OuroFlow] no font weights for " .. name)
+        warn("[ChronoFlow] no font weights for " .. name)
         return false
     end
-    local folder = opts.Folder or "OuroFlowFonts"
+    local folder = opts.Folder or "ChronoFlowFonts"
     pcall(function()
         if type(isfolder) == "function" and type(makefolder) == "function" and not isfolder(folder) then
             makefolder(folder)
@@ -330,7 +330,7 @@ function Library:LoadFont(opts)
             if ok then
                 table.insert(faces, { name = weightName, weight = info[1], style = "normal", assetId = getcustomasset(path) })
             else
-                warn("[OuroFlow] could not download " .. weightName .. " weight of " .. name)
+                warn("[ChronoFlow] could not download " .. weightName .. " weight of " .. name)
             end
         end
     end
@@ -408,7 +408,7 @@ local function resolveIcon(icon)
     elseif type(entry) == "string" then
         return entry
     end
-    warn("[OuroFlow] unknown lucide icon: " .. name)
+    warn("[ChronoFlow] unknown lucide icon: " .. name)
     return nil
 end
 
@@ -424,7 +424,7 @@ Library.Fonts = {
 local Theme = Library.Theme
 local Assets = Library.Assets
 
--- The OuroFlow mark, embedded as a 256px grayscale PNG so it needs no upload.
+-- The ChronoFlow mark, embedded as a 256px grayscale PNG so it needs no upload.
 -- It is written to the workspace once and loaded with getcustomasset; the
 -- white-to-grey shading is multiplied by the theme accent like the old logo.
 -- Without file functions the uploaded asset above stays in use.
@@ -460,7 +460,7 @@ pcall(function()
     if type(isfolder) == "function" and type(makefolder) == "function" and not isfolder(folder) then
         makefolder(folder)
     end
-    local path = folder .. "/OuroFlowLogo.png"
+    local path = folder .. "/ChronoFlowLogo.png"
     local png = decodeBase64(EMBEDDED_LOGO)
     local fresh = type(isfile) == "function" and type(readfile) == "function" and isfile(path) and readfile(path) == png
     if not fresh then
@@ -1077,7 +1077,7 @@ local function safeCall(callback, ...)
     end
     local ok, err = pcall(callback, ...)
     if not ok then
-        warn("[OuroFlow] callback error: " .. tostring(err))
+        warn("[ChronoFlow] callback error: " .. tostring(err))
     end
 end
 
@@ -1371,7 +1371,7 @@ function Tab:Label(opts)
                 if ok and value ~= nil then
                     text_.Text = Library._rich(value)
                 elseif not ok then
-                    warn("[OuroFlow] label update error: " .. tostring(value))
+                    warn("[ChronoFlow] label update error: " .. tostring(value))
                 end
                 task.wait(rate)
             end
@@ -11508,7 +11508,7 @@ function Tab:Status(opts)
                     end
                     render(true)
                 else
-                    warn("[OuroFlow] status update error: " .. tostring(value))
+                    warn("[ChronoFlow] status update error: " .. tostring(value))
                 end
                 task.wait(rate)
             end
@@ -11864,7 +11864,7 @@ function Tab:StatusList(opts)
                             handle:Set(result)
                         end
                     else
-                        warn("[OuroFlow] status list update error: " .. tostring(result))
+                        warn("[ChronoFlow] status list update error: " .. tostring(result))
                     end
                 end
                 task.wait(rate)
@@ -12037,7 +12037,7 @@ function Tab:Image(opts)
             return false, "replaced by a newer image"
         end
         if not asset then
-            warn("[OuroFlow] image: " .. tostring(err))
+            warn("[ChronoFlow] image: " .. tostring(err))
             return false, err
         end
         image.ImageTransparency = 1
@@ -16621,7 +16621,7 @@ Window.CreateTab = Window.Tab
 function Tab:SetBadge()
     if not Library._badgeWarned then
         Library._badgeWarned = true
-        warn("[OuroFlow] Tab:SetBadge was removed and does nothing")
+        warn("[ChronoFlow] Tab:SetBadge was removed and does nothing")
     end
 end
 
@@ -19459,7 +19459,7 @@ function Window:Destroy()
         end
     end)
     if not ok then
-        warn("[OuroFlow] unload animation failed, removing the window directly: " .. tostring(err))
+        warn("[ChronoFlow] unload animation failed, removing the window directly: " .. tostring(err))
         remove()
         return
     end
@@ -19531,7 +19531,7 @@ local function runTrusted(fn, ...)
     while result == nil do
         if os.clock() > deadline then
             timedOut = true
-            error("[OuroFlow] trusted call timed out", 0)
+            error("[ChronoFlow] trusted call timed out", 0)
         end
         task.wait()
     end
