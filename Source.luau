@@ -18388,7 +18388,7 @@ function Window:_buildMiniBar()
     -- flash an opaque island on the first minimize.
     if self.Transparent then
         island.BackgroundTransparency = 0.35
-        compact.BackgroundTransparency = 0.35
+        compact.BackgroundTransparency = 1
     end
     local mode = "Compact"
     local modeToken = 0
