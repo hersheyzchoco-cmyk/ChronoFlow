@@ -5695,6 +5695,13 @@ function Window:_sidebarResize(sidebar, width)
     local function light(on)
         if divider then
             tween(divider, { BackgroundColor3 = on and Theme.Accent or Theme.Stroke }, 0.15)
+            -- Hovering lights the whole draggable edge; the resting state is
+            -- the short centred rail.
+            tween(divider, {
+                AnchorPoint = on and Vector2.new(1, 0) or Vector2.new(1, 0.5),
+                Position = on and UDim2.fromScale(1, 0) or UDim2.fromScale(1, 0.5),
+                Size = on and UDim2.new(0, 1, 1, 0) or UDim2.new(0, 1, 0.6, 0),
+            }, 0.15)
         end
     end
     grip.MouseEnter:Connect(function()
