@@ -1,7 +1,3 @@
--- ChronoFlow UI library (the fork by joustingmatch that AZOTH v1-v3.4 was built on).
--- Recovered 2026-10-27 from the author's own Example.luau, which embeds the full
--- library (lines 3-19583 of the example). The upstream repo was deleted by its
--- author; this copy was downloaded by the user before the deletion.
 return (function()
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
